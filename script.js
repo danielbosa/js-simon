@@ -25,7 +25,13 @@ function numGen(){
 const btnStart = document.getElementById('btn-start');
 btnStart.addEventListener('click', function(){
     displayNum(numGen());
+    const timer = setTimeout(stopDisplay, (1000*5));
 });
+
+function stopDisplay(){
+    let displaySection = document.getElementById('display-number');
+    displaySection.innerHTML = '';
+}
 
 function displayNum(array){
     let displaySection = document.getElementById('display-number');
