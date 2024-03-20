@@ -22,8 +22,14 @@ function numGen(){
 
 //al click su un bottone, per ogni elemento dell'array scrivo codice html e ci infilo l'elemento i dell'array; finiti gli elementi dell'array, infilo tutto nel contenitore e appendo il contenitore nell'html
 
+const btnStart = document.getElementById('btn-start');
+btnStart.addEventListener('click', function(){
+    displayNum(numGen());
+});
+
 function displayNum(array){
     let displaySection = document.getElementById('display-number');
+    displaySection.innerHTML = '';
     let tempHtml = document.createElement('div');
 
     for(let i = 0; i < array.length; i++){
@@ -35,11 +41,12 @@ function displayNum(array){
     };
     displaySection.append(tempHtml);
 };
-displayNum(numGen())
+
 
 /*ALTRO MODO PER CREARE GLI SPAN CON I NUMERI
 function displayNum2(array){
     let displaySection = document.getElementById('display-number');
+    displaySection.innerHTML = '';
     let tempHtml = document.createElement('div');
     tempHtml.classList.add('d-flex','justify-content-around');
 
