@@ -16,23 +16,39 @@ function numGen(){
             numArray.push(num);
         }
     }
+    console.log(numArray);
     return numArray;
 };
 
-//al click su un bottone, per ogni elemento dell'array creo un elemento html e ci infilo l'elemento i dell'array; finiti gli elementi dell'array, infilo tutto nel contenitore e appendo il contenitore nell'html
+//al click su un bottone, per ogni elemento dell'array scrivo codice html e ci infilo l'elemento i dell'array; finiti gli elementi dell'array, infilo tutto nel contenitore e appendo il contenitore nell'html
 
 function displayNum(array){
-    let numSection;
     let displaySection = document.getElementById('display-number');
-    
-    for(let i = 0; i < array.length; i++){
-    let numSlot = document.createElement('span');
-    numSlot.textContent = array[i];
-    console.log(numSlot, typeof numSlot);
-    numSection.append(numSlot);
-    }
-    
-    displaySection.append(numSection);
-};
+    let tempHtml = document.createElement('div');
 
-displayNum(numGen());
+    for(let i = 0; i < array.length; i++){
+    tempHtml.innerHTML += `
+        <span>
+        ${array[i]}
+        </span>
+        `;
+    };
+    displaySection.append(tempHtml);
+};
+displayNum(numGen())
+
+/*ALTRO MODO PER CREARE GLI SPAN CON I NUMERI
+function displayNum2(array){
+    let displaySection = document.getElementById('display-number');
+    let tempHtml = document.createElement('div');
+    tempHtml.classList.add('d-flex','justify-content-around');
+
+    for(let i = 0; i < array.length; i++){
+        let numSpan = document.createElement('span')
+        numSpan.innerHTML = array[i];
+        tempHtml.append(numSpan);
+    };
+    displaySection.append(tempHtml);
+};
+displayNum2(numGen())
+*/
