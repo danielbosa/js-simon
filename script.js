@@ -24,13 +24,37 @@ function numGen(){
 
 const btnStart = document.getElementById('btn-start');
 btnStart.addEventListener('click', function(){
-    displayNum(numGen());
-    const timer = setTimeout(stopDisplay, (1000*5));
+    let arrayDaRicordare = numGen();
+    displayNum(arrayDaRicordare);
+    setTimeout(stopDisplay(arrayDaRicordare), (1000*3));
+    
+
 });
 
-function stopDisplay(){
+function checkArray (array1, array2){
+    let score = 0;
+    let risposteGiuste = [];
+    for(let i = 0; i < array1.length; i++){
+        if(array1.includes(array2[i])){
+            score++;
+            risposteGiuste.push(array2[i]);
+        }
+    };
+    console.log(score);
+    console.log(risposteGiuste);
+    return score;
+};
+
+function stopDisplay(arrayDaRicordare){
     let displaySection = document.getElementById('display-number');
     displaySection.innerHTML = '';
+    let answer = [];
+    while(answer.length < 5){
+        let userAnswer = parseInt(prompt('type a number'));
+        answer.push(userAnswer);
+    }
+    console.log(answer);
+    checkArray (arrayDaRicordare, answer)
 }
 
 function displayNum(array){
