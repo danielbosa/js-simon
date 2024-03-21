@@ -47,6 +47,7 @@ function displayNum(array){
 
 function showResult(result){
     let displaySection = document.getElementById('display-number');
+    displaySection.innerHTML = '';
     let tempHtml = document.createElement('div');
 
     tempHtml.innerHTML += `
@@ -99,8 +100,6 @@ function stopDisplay(arrayDaRicordare){
             answer.push(parseInt(answerX.value));
         };
         console.log(answer);
-
-        //checkArray(arrayDaRicordare,answer);
         showResult(checkArray(arrayDaRicordare,answer));
     })
 
