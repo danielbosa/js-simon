@@ -50,25 +50,22 @@ function showResult(result){
     let tempHtml = document.createElement('div');
 
     tempHtml.innerHTML += `
-        <div>Punteggio: ${result[1]}</div>
-        <div>Risposte giuste: ${result[2]}</div>
+        <div>Punteggio: ${result.length}</div>
+        <div>Risposte giuste: ${result}</div>
         `;
 
     displaySection.append(tempHtml);
 }
 
 function checkArray (array1, array2){
-    let score = 0;
     let risposteGiuste = [];
     for(let i = 0; i < array1.length; i++){
         if(array1.includes(array2[i])){
-            score++;
             risposteGiuste.push(array2[i]);
         }
     };
-    console.log(score);
     console.log(risposteGiuste);
-    const result = [score, risposteGiuste];
+    const result = risposteGiuste;
     console.log(result);
     return result;
 };
@@ -99,7 +96,7 @@ function stopDisplay(arrayDaRicordare){
         let answer = [];
         for(let i = 0; i < arrayDaRicordare.length; i++){
             let answerX = document.getElementById(`answer-${i}`);
-            answer.push(answerX.value);
+            answer.push(parseInt(answerX.value));
         };
         console.log(answer);
 
