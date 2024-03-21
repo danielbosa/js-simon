@@ -5,6 +5,16 @@ Dopo i 30 secondi i numeri scompaiono e l'utente deve inserire, uno alla volta, 
 Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati.
 */
 
+//al click su un bottone, per ogni elemento dell'array scrivo codice html e ci infilo l'elemento i dell'array; finiti gli elementi dell'array, infilo tutto nel contenitore e appendo il contenitore nell'html
+
+const btnStart = document.getElementById('btn-start');
+btnStart.addEventListener('click', function(){
+    let arrayDaRicordare = numGen();
+    displayNum(arrayDaRicordare);
+    setTimeout(stopDisplay, (1000*3), arrayDaRicordare);
+});
+
+
 //funzione che genera un numero casuale e, se questo numero non è contenuto già nell'array X, lo pusha nell'array X;
 //finché la lunghezza dell'array non è === 5;
 
@@ -20,43 +30,6 @@ function numGen(){
     return numArray;
 };
 
-//al click su un bottone, per ogni elemento dell'array scrivo codice html e ci infilo l'elemento i dell'array; finiti gli elementi dell'array, infilo tutto nel contenitore e appendo il contenitore nell'html
-
-const btnStart = document.getElementById('btn-start');
-btnStart.addEventListener('click', function(){
-    let arrayDaRicordare = numGen();
-    displayNum(arrayDaRicordare);
-    setTimeout(stopDisplay(arrayDaRicordare), (1000*3));
-    
-
-});
-
-function checkArray (array1, array2){
-    let score = 0;
-    let risposteGiuste = [];
-    for(let i = 0; i < array1.length; i++){
-        if(array1.includes(array2[i])){
-            score++;
-            risposteGiuste.push(array2[i]);
-        }
-    };
-    console.log(score);
-    console.log(risposteGiuste);
-    return score;
-};
-
-function stopDisplay(arrayDaRicordare){
-    let displaySection = document.getElementById('display-number');
-    displaySection.innerHTML = '';
-    let answer = [];
-    while(answer.length < 5){
-        let userAnswer = parseInt(prompt('type a number'));
-        answer.push(userAnswer);
-    }
-    console.log(answer);
-    checkArray (arrayDaRicordare, answer)
-}
-
 function displayNum(array){
     let displaySection = document.getElementById('display-number');
     displaySection.innerHTML = '';
@@ -71,6 +44,82 @@ function displayNum(array){
     };
     displaySection.append(tempHtml);
 };
+
+function showResult(result){
+    let displaySection = document.getElementById('display-number');
+    let tempHtml = document.createElement('div');
+
+    tempHtml.innerHTML += `
+        <div>Punteggio: ${result[1]}</div>
+        <div>Risposte giuste: ${result[2]}</div>
+        `;
+
+    displaySection.append(tempHtml);
+}
+
+function checkArray (array1, array2){
+    let score = 0;
+    let risposteGiuste = [];
+    for(let i = 0; i < array1.length; i++){
+        if(array1.includes(array2[i])){
+            score++;
+            risposteGiuste.push(array2[i]);
+        }
+    };
+    console.log(score);
+    console.log(risposteGiuste);
+    const result = [score, risposteGiuste];
+    console.log(result);
+    return result;
+};
+
+function stopDisplay(arrayDaRicordare){
+    let displaySection = document.getElementById('display-number');
+    displaySection.innerHTML = '';
+    let tempHtml = document.createElement('form');
+    tempHtml.setAttribute('id', 'answerForm');
+    let answerForm = document.getElementById('answerForm');
+
+    for(let i = 0; i < arrayDaRicordare.length; i++){
+        let userNum = document.createElement('INPUT')
+        userNum.setAttribute('type', 'number');
+        userNum.setAttribute('id', `answer-${i}`);
+        tempHtml.append(userNum);
+    };
+
+    let btnSubmit = document.createElement('BUTTON');
+    btnSubmit.className = 'btn btn-primary';
+    btnSubmit.innerHTML = `Submit`;
+    btnSubmit.setAttribute('id', 'btn-submit');
+    tempHtml.append(btnSubmit);
+    displaySection.append(tempHtml);
+
+    btnSubmit.addEventListener('click', function(e){
+        e.preventDefault();
+        let answer = [];
+        for(let i = 0; i < arrayDaRicordare.length; i++){
+            let answerX = document.getElementById(`answer-${i}`);
+            answer.push(answerX.value);
+        };
+        console.log(answer);
+
+        //checkArray(arrayDaRicordare,answer);
+        showResult(checkArray(arrayDaRicordare,answer));
+    })
+
+    
+    //while(answer.length < 5){
+        //let userAnswer = parseInt(prompt('type a number'));
+        //answer.push(userAnswer);
+    //}
+    //console.log(answer);
+    //checkArray (arrayDaRicordare, answer);    
+};
+
+//ho commentato queste parti perché sospetto che il prompt interferisca: infatti non puliva la displaySection dai numeri da ricordare... Prova a farlo con delle caselle di testo/input.
+
+
+
 
 
 /*ALTRO MODO PER CREARE GLI SPAN CON I NUMERI
